@@ -1,4 +1,4 @@
-module Sundays where
+module Sundays_tail_recursive where
 
 dayOfWeek :: Integer -> Integer -> Integer -> Integer
 dayOfWeek y m d = (d + t1 + k + t2 + t3 + 5 * j) `mod` 7
