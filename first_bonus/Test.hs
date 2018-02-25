@@ -65,3 +65,21 @@ equal_functions y m = test y m
       where
         y' = if y < 1900 then 1900 else y
         m' = if m <= 0 then 1 else (if m > 12 then 12 else m)
+
+
+day :: Integer -> Integer -> Integer
+day y a 
+  | a <= 0    = 0 
+  | otherwise = (daysInYear y) + (day (y+1) (a-1))
+    where
+      daysInYear :: Integer -> Integer
+      daysInYear y' = month 1
+        where
+          month :: Integer -> Integer
+          month m 
+            | m > 12    = 0 
+            | otherwise = (daysInMonth m y') + (month (m+1))
+
+
+isNumWeeksInteger :: Integer -> Bool
+isNumWeeksInteger y = (day y 400) `mod` 7 == 0
