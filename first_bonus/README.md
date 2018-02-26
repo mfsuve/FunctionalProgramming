@@ -12,4 +12,4 @@ For this question, I created a test function called `day` which calculates the n
 
 I also created a test function that tries some starting year values with the second parameter being 400 and checks if that function with those parameters returns a value that is multiple of 7. I run that test and it passed. Therefore I can say that the number of days in 400 years is a multiple of 7.
 
-Since all the weeks in 400 years are whole weeks we can say that all of the days in a week occur at the same rate in those years. The number of all the seven days of a week in 400 years are the same. Therefore, the possibility that a certain day of a month is a Sunday is $\frac{1}{7}$. Also all days are equally possible.
+Since all the weeks in 400 years are whole weeks we can say that all of the days in a week occur at the same rate in those years. The number of all the seven days of a week in 400 years are the same. Therefore, the possibility that a certain day of a month is a Sunday is `1/7`. Also all days are equally possible.
