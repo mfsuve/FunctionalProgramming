@@ -14,3 +14,9 @@ cardColor card
   | suit card == Spades = Black
   | suit card == Clubs  = Black
   | otherwise           = Red
+
+cardValue :: Card -> Int
+cardValue card = case rank card of
+  Num n -> n
+  Ace   -> 11
+  _     -> 10
