@@ -8,7 +8,9 @@ data Card = Card {suit :: Suit, rank :: Rank}
   deriving (Show, Eq)
 data Move = Draw | Discard Card
   deriving (Show, Eq)
-  
+data State = State {held :: [Card], list :: [Card]}
+  deriving (Show, Eq)
+
 cardColor :: Card -> Color
 cardColor card
   | suit card == Spades = Black
