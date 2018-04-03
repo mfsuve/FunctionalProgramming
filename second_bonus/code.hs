@@ -38,3 +38,14 @@ sumCards cs = sumCardstail cs 0
     sumCardstail :: [Card] -> Int -> Int
     sumCardstail []       acc = acc
     sumCardstail (c':cs') acc = sumCardstail cs' (acc + cardValue c')  -- Parenthesis are for avoiding this situation: (sumCardstail cs' acc) + cardValue c'
+
+score :: [Card] -> Int -> Int
+score cs g
+  | allSameColor cs = p `div` 2
+  | otherwise       = p
+    where
+      p :: Int
+      p = if s > g then 3 * (s - g) else g - s
+        where
+          s :: Int
+          s = sumCards cs
