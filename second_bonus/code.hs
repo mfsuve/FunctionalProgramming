@@ -26,3 +26,8 @@ removeCard [] c = error "Card is not in the list"
 removeCard (c':cs) c
   | c' == c     = cs
   | otherwise   = c' : removeCard cs c
+  
+allSameColor :: [Card] -> Bool
+allSameColor []   = True
+allSameColor [c]  = True
+allSameColor (c:cs@(c':cs')) = if cardColor c == cardColor c' then allSameColor cs else False
