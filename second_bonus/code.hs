@@ -28,6 +28,13 @@ removeCard (c':cs) c
   | otherwise   = c' : removeCard cs c
   
 allSameColor :: [Card] -> Bool
-allSameColor []   = True
-allSameColor [c]  = True
+allSameColor []              = True
+allSameColor [c]             = True
 allSameColor (c:cs@(c':cs')) = if cardColor c == cardColor c' then allSameColor cs else False
+
+sumCards :: [Card] -> Int
+sumCards cs = sumCardstail cs 0
+  where
+    sumCardstail :: [Card] -> Int -> Int
+    sumCardstail []       acc = acc
+    sumCardstail (c':cs') acc = sumCardstail cs' (acc + cardValue c')  -- Parenthesis are for avoiding this situation: (sumCardstail cs' acc) + cardValue c'
