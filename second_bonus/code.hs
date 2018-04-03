@@ -20,3 +20,9 @@ cardValue card = case rank card of
   Num n -> n
   Ace   -> 11
   _     -> 10
+  
+removeCard :: [Card] -> Card -> [Card]
+removeCard [] c = error "Card is not in the list"
+removeCard (c':cs) c
+  | c' == c     = cs
+  | otherwise   = c' : removeCard cs c
