@@ -51,3 +51,22 @@ score cs g
         where
           s :: Int
           s = sumCards cs
+
+runGame :: [Card] -> [Move] -> Int -> Int
+runGame cs ms g = runGame' ms (State [] cs)
+  where
+    runGame' :: [Move] -> State -> Int
+    runGame' ms' state
+      | isOver    = score (held state) g
+      | otherwise = nextMove
+        where
+          isOver :: Bool
+          isOver = case (ms', state) of
+            ([],     _             ) -> True                                   -- No moves left
+            (Draw:_, State{list=[]}) -> True                                   -- Drawing from empty card list
+            (_,      State{held=h} ) -> if sumCards h > g then True else False -- Sum of the held-cards exceeds the goal
+
+          nextMove :: Int
+          nextMove = case (ms', state) of
+            ((Discard c):ms'', State{held=h, list=l}    ) -> runGame' ms'' (State (removeCard h c) l)
+            ( Draw:ms'',       State{held=h, list=c:cs'}) -> runGame' ms'' (State (c:h) cs')
