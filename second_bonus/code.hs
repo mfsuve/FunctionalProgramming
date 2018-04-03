@@ -68,5 +68,13 @@ runGame cs ms g = runGame' ms (State [] cs)
 
           nextMove :: Int
           nextMove = case (ms', state) of
-            ((Discard c):ms'', State{held=h, list=l}    ) -> runGame' ms'' (State (removeCard h c) l)
-            ( Draw:ms'',       State{held=h, list=c:cs'}) -> runGame' ms'' (State (c:h) cs')
+            ((Discard c):ms'', State{held=h, list=l}    ) -> runGame' ms'' (State (removeCard h c) l) -- Discarding a card
+            ( Draw:ms'',       State{held=h, list=c:cs'}) -> runGame' ms'' (State (c:h) cs')          -- Drawing a card
+
+convertSuit :: Char -> Suit
+convertSuit c
+  | c `elem` "cC" = Clubs
+  | c `elem` "dD" = Diamonds
+  | c `elem` "hH" = Hearts
+  | c `elem` "sS" = Spades
+  | otherwise     = error "Unknown Suit"
