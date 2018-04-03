@@ -1,10 +1,16 @@
 data Color = Red | Black
-  deriving Show
+  deriving (Show, Eq)
 data Suit = Clubs | Diamonds | Hearts | Spades
-  deriving Show
+  deriving (Show, Eq)
 data Rank = Num Int | Jack | Queen | King | Ace
-  deriving Show
+  deriving (Show, Eq)
 data Card = Card {suit :: Suit, rank :: Rank}
-  deriving Show
+  deriving (Show, Eq)
 data Move = Draw | Discard Card
-  deriving Show
+  deriving (Show, Eq)
+  
+cardColor :: Card -> Color
+cardColor card
+  | suit card == Spades = Black
+  | suit card == Clubs  = Black
+  | otherwise           = Red
