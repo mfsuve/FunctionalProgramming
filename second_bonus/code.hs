@@ -95,3 +95,16 @@ convertRank c
 
 convertCard :: Char -> Char -> Card
 convertCard s r = Card{suit = convertSuit s, rank = convertRank r}
+
+readCards :: IO [Card]
+readCards = readCards' []
+  where
+    readCards' :: [Card] -> IO [Card]
+    readCards' cs = do input <- getLine
+                       if input == "."
+                          then return cs
+                          else readCards' ((readCard input):cs)
+                               where
+                                 readCard :: String -> Card
+                                 readCard [c1, c2] = convertCard c1 c2
+                                 readCard _        = error "Wrong Input"
