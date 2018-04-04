@@ -1,3 +1,5 @@
+import Data.Char
+
 data Color = Red | Black
   deriving (Show, Eq)
 data Suit = Clubs | Diamonds | Hearts | Spades
@@ -78,3 +80,15 @@ convertSuit c
   | c `elem` "hH" = Hearts
   | c `elem` "sS" = Spades
   | otherwise     = error "Unknown Suit"
+
+convertRank :: Char -> Rank
+convertRank c
+  | c `elem` "jJ"           = Jack
+  | c `elem` "qQ"           = Queen
+  | c `elem` "kK"           = King
+  | c `elem` "1"            = Ace
+  | c `elem` "tT"           = Num 10
+  | isDigit c && digit /= 0 = Num digit
+  | otherwise               = error "Unknown Rank"
+    where
+      digit = digitToInt c
