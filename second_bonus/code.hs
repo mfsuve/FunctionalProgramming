@@ -92,3 +92,6 @@ convertRank c
   | otherwise               = error "Unknown Rank"
     where
       digit = digitToInt c
+
+convertCard :: Char -> Char -> Card
+convertCard s r = Card{suit = convertSuit s, rank = convertRank r}
