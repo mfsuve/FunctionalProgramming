@@ -108,3 +108,10 @@ readCards = readCards' []
                                  readCard :: String -> Card
                                  readCard [c1, c2] = convertCard c1 c2
                                  readCard _        = error "Wrong Input"
+                                 
+convertMove :: Char -> Char -> Char -> Move
+convertMove m s r
+  | m `elem` "dD" = Draw
+  | otherwise     = Discard (convertCard s r)
+  
+
