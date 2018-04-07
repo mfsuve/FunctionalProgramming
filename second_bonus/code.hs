@@ -112,6 +112,5 @@ readCards = readCards' []
 convertMove :: Char -> Char -> Char -> Move
 convertMove m s r
   | m `elem` "dD" = Draw
-  | otherwise     = Discard (convertCard s r)
-  
-
+  | m `elem` "rR" = Discard (convertCard s r)
+  | otherwise     = error "Unknown Move"
