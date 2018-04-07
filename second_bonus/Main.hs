@@ -104,7 +104,7 @@ readCards = readCards' []
     readCards' cs = do input <- getLine
                        if input == "."
                           then return cs
-                          else readCards' ((readCard input):cs)
+                          else readCards' (cs ++ [readCard input])
                                where
                                  readCard :: String -> Card
                                  readCard [c1, c2] = convertCard c1 c2
@@ -123,7 +123,7 @@ readMoves = readMoves' []
     readMoves' ms = do input <- getLine
                        if input == "."
                           then return ms
-                          else readMoves' ((readMove input):ms)
+                          else readMoves' (ms ++ [readMove input])
                                where
                                  readMove :: String -> Move
                                  readMove [c1]         = convertMove c1 'x' 'x'
