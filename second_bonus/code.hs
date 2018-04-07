@@ -128,3 +128,19 @@ readMoves = readMoves' []
                                  readMove [c1]         = convertMove c1 'x' 'x'
                                  readMove [c1, c2, c3] = convertMove c1 c2 c3
                                  readMove _            = error "Wrong Input"
+
+main = do putStrLn "Enter cards:"
+          cards <- readCards
+          putStrLn (show cards)
+
+          putStrLn "Enter moves:"
+          moves <- readMoves
+          putStrLn (show moves)
+
+          putStrLn "Enter goal:"
+          line <- getLine
+
+          let goal = read line :: Int
+
+          let score = runGame cards moves goal
+          putStrLn ("Score: " ++ show score)
