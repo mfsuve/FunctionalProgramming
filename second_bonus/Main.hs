@@ -1,3 +1,4 @@
+module Main where
 import Data.Char
 
 data Color = Red | Black
