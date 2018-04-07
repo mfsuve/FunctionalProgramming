@@ -114,3 +114,17 @@ convertMove m s r
   | m `elem` "dD" = Draw
   | m `elem` "rR" = Discard (convertCard s r)
   | otherwise     = error "Unknown Move"
+  
+readMoves :: IO [Move]
+readMoves = readMoves' []
+  where
+    readMoves' :: [Move] -> IO [Move]
+    readMoves' ms = do input <- getLine
+                       if input == "."
+                          then return ms
+                          else readMoves' ((readMove input):ms)
+                               where
+                                 readMove :: String -> Move
+                                 readMove [c1]         = convertMove c1 'x' 'x'
+                                 readMove [c1, c2, c3] = convertMove c1 c2 c3
+                                 readMove _            = error "Wrong Input"
