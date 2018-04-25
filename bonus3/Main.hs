@@ -9,3 +9,7 @@ wordCharCounts cs = zip nlower (count nlower)
     lower  = map toLower cs
     nlower = nub lower
     count  = map (\c -> length (filter (==c) lower))
+
+
+sentenceCharCounts :: String -> [CharCount]
+sentenceCharCounts = map wordCharCounts . words
