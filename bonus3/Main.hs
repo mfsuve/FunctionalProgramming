@@ -13,3 +13,7 @@ wordCharCounts cs = zip nlower (count nlower)
 
 sentenceCharCounts :: String -> [CharCount]
 sentenceCharCounts = map wordCharCounts . words
+
+
+dictCharCounts :: [String] -> [(String, CharCount)]
+dictCharCounts ws = zip ws (map wordCharCounts ws)
