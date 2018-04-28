@@ -1,10 +1,11 @@
 import Data.List
 import Data.Char
+import Data.Map hiding (map, filter)
 
-type CharCount = [(Char, Int)]
+type CharCount = Map Char Int
 
 wordCharCounts :: String -> CharCount
-wordCharCounts cs = zip nlower (count nlower)
+wordCharCounts cs = fromList $ zip nlower (count nlower)
   where
     lower  = map toLower cs
     nlower = nub lower
@@ -15,5 +16,5 @@ sentenceCharCounts :: String -> [CharCount]
 sentenceCharCounts = map wordCharCounts . words
 
 
-dictCharCounts :: [String] -> [(String, CharCount)]
-dictCharCounts ws = zip ws (map wordCharCounts ws)
+dictCharCounts :: [String] -> Map String CharCount
+dictCharCounts ws = fromList $ zip ws (map wordCharCounts ws)
