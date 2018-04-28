@@ -24,3 +24,7 @@ dictWordsByCharCounts :: Map String CharCount -> Map CharCount [String]
 dictWordsByCharCounts m = fromListWith (++) p
   where
     p = [(cc, [w]) | (w, cc) <- toList m]
+
+
+wordAnagrams :: String -> Map CharCount [String] -> [String]
+wordAnagrams w m = findWithDefault [] (wordCharCounts w) m
