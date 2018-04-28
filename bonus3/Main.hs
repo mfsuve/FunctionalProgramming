@@ -18,3 +18,9 @@ sentenceCharCounts = map wordCharCounts . words
 
 dictCharCounts :: [String] -> Map String CharCount
 dictCharCounts ws = fromList $ zip ws (map wordCharCounts ws)
+
+
+dictWordsByCharCounts :: Map String CharCount -> Map CharCount [String]
+dictWordsByCharCounts m = fromListWith (++) p
+  where
+    p = [(cc, [w]) | (w, cc) <- toList m]
