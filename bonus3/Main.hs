@@ -55,3 +55,13 @@ charCountsSubsets cc' = map toList $ map (fromListWith (+)) $ nub $ subsets $ ex
 
 subtractCounts :: CharCount -> CharCount -> CharCount
 subtractCounts = differenceWith (\c1 c2 -> if c1==c2 then Nothing else Just (c1-c2))
+
+
+-- Currently works only for one word
+sentenceAnagrams :: String -> IO [String]
+sentenceAnagrams s = anagrams s
+  where
+    anagrams w = do
+                  dict <- readDict
+                  let res = wordAnagrams w $ dictWordsByCharCounts $ dictCharCounts $ dict
+                  return res
