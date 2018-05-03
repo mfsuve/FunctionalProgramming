@@ -1,6 +1,7 @@
 import Data.List
 import Data.Char
 import Data.Map hiding (map, filter, foldr)
+import System.IO
 
 type CharCount = Map Char Int
 
@@ -14,6 +15,13 @@ wordCharCounts cs = fromList $ zip nlower (count nlower)
 
 sentenceCharCounts :: String -> CharCount
 sentenceCharCounts s = wordCharCounts $ foldr (++) [] $ words s
+
+
+readDict :: IO [String]
+readDict = do
+            file <- openFile "words.txt" ReadMode
+            contents <- hGetContents file
+            return (words contents)
 
 
 dictCharCounts :: [String] -> Map String CharCount
