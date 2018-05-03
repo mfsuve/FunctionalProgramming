@@ -43,3 +43,7 @@ charCountsSubsets cc' = map toList $ map (fromListWith (+)) $ nub $ subsets $ ex
     expand ((c, i):ccs) = (c, 1):(expand ((c, i-1):ccs))
     subsets []       = [[]]
     subsets (cc:ccs) = subsets ccs ++ map (cc:) (subsets ccs)
+
+
+subtractCounts :: CharCount -> CharCount -> CharCount
+subtractCounts = differenceWith (\c1 c2 -> if c1==c2 then Nothing else Just (c1-c2))
