@@ -1,6 +1,6 @@
 import Data.List
 import Data.Char
-import Data.Map hiding (map, filter)
+import Data.Map hiding (map, filter, foldr)
 
 type CharCount = Map Char Int
 
@@ -12,8 +12,8 @@ wordCharCounts cs = fromList $ zip nlower (count nlower)
     count  = map (\c -> length (filter (==c) lower))
 
 
-sentenceCharCounts :: String -> [CharCount]
-sentenceCharCounts = map wordCharCounts . words
+sentenceCharCounts :: String -> CharCount
+sentenceCharCounts s = wordCharCounts $ foldr (++) [] $ words s
 
 
 dictCharCounts :: [String] -> Map String CharCount
