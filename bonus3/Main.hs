@@ -105,6 +105,10 @@ anagrams s dict = foldr (++) [] [subsetAnagrams ss cc | ss <- charCountsSubsets 
   where
     cc = sentenceCharCounts s
 
+    -- This function takes a subset of a character count
+    -- assumes that subset is a one word's character count
+    -- and the rest is another group whose anagrams can be found recursively
+    -- This function is called by sending all the subsets of the initial sentence's character count
     subsetAnagrams :: CharCount -> CharCount -> [String]
     subsetAnagrams ss cc
       | Map.null remains = wordsFrom cc
