@@ -43,8 +43,8 @@ wordAnagrams w m = findWithDefault [] (wordCharCounts w) m
 -- get all apossible subsets
 -- remove duplicates
 -- convert back all 1s by adding (('a', 1), ('a', 1) -> ('a', 2))
-charCountsSubsets :: CharCount -> [[(Char, Int)]]
-charCountsSubsets cc' = map toList $ map (fromListWith (+)) $ nub $ subsets $ expand $ toList cc'
+charCountsSubsets :: CharCount -> [CharCount]
+charCountsSubsets = map (fromListWith (+)) . nub . subsets . expand . toList
   where
     expand []           = []
     expand ((c, 1):ccs) = (c, 1):(expand ccs)
