@@ -85,3 +85,11 @@ anagrams s dict = foldr (++) [] [subsetAnagrams ss cc | ss <- charCountsSubsets 
 
     wordsFrom :: CharCount -> [String]
     wordsFrom cc'' = [w | w <- fromMaybe [] (lookup cc'' charCountToWords)]
+
+
+main = do
+    args <- getArgs
+    let s = args !! 0
+    result <- sentenceAnagrams s
+    let lined = if List.null result then "No anagrams" else foldr1 (\s1 s2 -> s1 ++ "\n" ++ s2) result
+    putStrLn lined
