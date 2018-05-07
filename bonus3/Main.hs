@@ -1,7 +1,11 @@
-import Data.List
+import Prelude hiding (lookup)
+import Data.List as List hiding (lookup)
 import Data.Char
-import Data.Map hiding (map, filter, foldr)
+import Data.Map as Map hiding (map, filter, foldr)
+import Data.Maybe
 import System.IO
+import System.Environment
+import Debug.Trace
 
 type CharCount = Map Char Int
 
@@ -57,11 +61,27 @@ subtractCounts :: CharCount -> CharCount -> CharCount
 subtractCounts = differenceWith (\c1 c2 -> if c1==c2 then Nothing else Just (c1-c2))
 
 
--- Currently works only for one word
 sentenceAnagrams :: String -> IO [String]
-sentenceAnagrams s = anagrams s
+sentenceAnagrams s = do
+              dict <- readDict
+              return (anagrams s dict)
+
+
+anagrams :: String -> [String] -> [String]
+anagrams s dict = foldr (++) [] [subsetAnagrams ss cc | ss <- charCountsSubsets cc]
   where
-    anagrams w = do
-                  dict <- readDict
-                  let res = wordAnagrams w $ dictWordsByCharCounts $ dictCharCounts $ dict
-                  return res
+    cc = sentenceCharCounts s
+
+    subsetAnagrams :: CharCount -> CharCount -> [String]
+    subsetAnagrams ss cc
+      | Map.null remains = wordsFrom cc
+      | otherwise        = [w ++ " " ++ rest | w    <- wordsFrom ss,
+                                               ss'  <- charCountsSubsets remains,
+                                               rest <- subsetAnagrams ss' remains]
+        where
+          remains = subtractCounts cc ss
+
+    charCountToWords = dictWordsByCharCounts $ dictCharCounts $ dict
+
+    wordsFrom :: CharCount -> [String]
+    wordsFrom cc'' = [w | w <- fromMaybe [] (lookup cc'' charCountToWords)]
