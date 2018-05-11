@@ -6,7 +6,7 @@ import Prelude hiding (Word)
 
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
 type Word = String
-data Action = Add (Either String [String]) | Search String | Find String | Print | Exit
+data Action = Add [String] | Search String | Find String | Print | Exit
     deriving Show
 
 empty :: Trie
@@ -28,7 +28,7 @@ prefix :: Word -> Trie -> Maybe [Word]
 prefix = undefined
 
 
-getInput :: IO (String, String)
+getInput :: IO (String, [String])
 getInput = do
             putStrLn "a) Add Word"
             putStrLn "s) Search Word"
@@ -38,18 +38,24 @@ getInput = do
             putStrLn "Enter the action:"
             action <- getLine
             if action == "p" || action == "e" then
-                return (action, "")
+                return (action, [])
                 else do
                     putStrLn "Enter word/prefix:"
                     info <- getLine
-                    return (action, info)
+                    return (action, words info)
 
 
-convertAction :: (String, (Either String [String])) -> Maybe Action
+convertAction :: (String, [String]) -> Maybe Action
 convertAction a = case a of
-    ("a", e)      -> Just $ Add e
-    ("s", Left s) -> Just $ Search s
-    ("f", Left s) -> Just $ Find s
-    ("p", _)      -> Just $ Print
-    ("e", _)      -> Just $ Exit
-    _             -> Nothing
+    ("a", ss)  -> Just $ Add ss
+    ("s", [s]) -> Just $ Search s
+    ("f", [s]) -> Just $ Find s
+    ("p", _)   -> Just $ Print
+    ("e", _)   -> Just $ Exit
+    _          -> Nothing
+
+
+main = do
+        input <- getInput
+        let action = convertAction input
+        putStrLn $ show action
