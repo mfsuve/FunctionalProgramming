@@ -5,8 +5,9 @@ import System.IO
 import Prelude hiding (Word)
 
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
-data Action = Add (Either String [String]) | Search String | Find String | Print
 type Word = String
+data Action = Add (Either String [String]) | Search String | Find String | Print | Exit
+    deriving Show
 
 empty :: Trie
 empty = undefined
@@ -42,3 +43,13 @@ getInput = do
                     putStrLn "Enter word/prefix:"
                     info <- getLine
                     return (action, info)
+
+
+convertAction :: (String, (Either String [String])) -> Maybe Action
+convertAction a = case a of
+    ("a", e)      -> Just $ Add e
+    ("s", Left s) -> Just $ Search s
+    ("f", Left s) -> Just $ Find s
+    ("p", _)      -> Just $ Print
+    ("e", _)      -> Just $ Exit
+    _             -> Nothing
