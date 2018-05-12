@@ -84,6 +84,28 @@ convertAction a = case a of
     _          -> Nothing
 
 
+doAction :: Maybe Action -> Trie -> IO ()
+doAction Nothing t = do
+                    putStrLn "Wrong Input"
+                    loop t
+doAction (Just (Add w)) t  = loop (insert w t)
+doAction (Just (Search w)) t
+    | search w t = do putStrLn "Exists in dictionary!"
+                      loop t
+    | otherwise  = do putStrLn "NOT exist!"
+                      loop t
+doAction (Just (Find w)) t = case (prefix w t) of
+    Nothing -> do putStrLn "No words found with that prefix!"
+                  loop t
+    Just ws -> do putStrLn "Found words:"
+                  (putStr . unlines) ws
+                  loop t
+doAction (Just Print) t = do putStrLn "List of words in dictionary:"
+                             (putStr . unlines . getWords) t
+                             loop t
+doAction _ _ = return ()
+
+
 main = do
         input <- getInput
         let action = convertAction input
