@@ -42,7 +42,11 @@ search w Trie{end=e, children=chl} = find w (M.toList chl)
 
 
 getWords :: Trie -> [Word]
-getWords = undefined
+getWords Trie{end=e, children=chl} = allWords e [] (M.toList chl)
+    where
+        allWords e' acc []                                       = if e' then [acc] else []
+        allWords e' acc ((c, Trie{end=e'', children=chl'}):chls) = allWords e'' (acc ++ [c]) (M.toList chl') ++ allWords e' acc chls
+
 
 prefix :: Word -> Trie -> Maybe [Word]
 prefix = undefined
