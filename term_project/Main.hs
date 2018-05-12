@@ -28,7 +28,7 @@ insert (c:cs) Trie{children=chl} = Trie{end=False, children=toMap False (M.toLis
 
 
 insertList :: [Word] -> Trie
-insertList = undefined
+insertList = foldr insert empty
 
 search :: Word -> Trie -> Bool
 search = undefined
