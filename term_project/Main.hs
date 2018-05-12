@@ -106,6 +106,13 @@ doAction (Just Print) t = do putStrLn "List of words in dictionary:"
 doAction _ _ = return ()
 
 
+loop :: Trie -> IO ()
+loop t = do
+        input <- getInput
+        let action = convertAction input
+        doAction action t
+
+
 main = do
         input <- getInput
         let action = convertAction input
