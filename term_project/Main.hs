@@ -5,15 +5,19 @@ import System.IO
 import Prelude hiding (Word)
 
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
+    deriving Show
 type Word = String
 data Action = Add [String] | Search String | Find String | Print | Exit
     deriving Show
 
+
 empty :: Trie
-empty = undefined
+empty = Trie {end=False, children=M.empty}
+
 
 insert :: Word -> Trie -> Trie
 insert = undefined
+
 
 insertList :: [Word] -> Trie
 insertList = undefined
