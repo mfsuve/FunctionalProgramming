@@ -30,8 +30,16 @@ insert (c:cs) Trie{children=chl} = Trie{end=False, children=toMap False (M.toLis
 insertList :: [Word] -> Trie
 insertList = foldr insert empty
 
+
 search :: Word -> Trie -> Bool
-search = undefined
+search [] Trie{end=e} = e
+search w Trie{end=e, children=chl} = find w (M.toList chl)
+    where
+        find _ []       = False
+        find w'@(c:cs) ((c', t):chls)
+            | c==c'     = search cs t
+            | otherwise = find w' chls
+
 
 getWords :: Trie -> [Word]
 getWords = undefined
