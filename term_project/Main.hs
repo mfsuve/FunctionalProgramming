@@ -16,8 +16,8 @@ empty = Trie {end=False, children=M.empty}
 
 
 insert :: Word -> Trie -> Trie
-insert []     Trie{children=chl} = Trie{end=True,  children=chl}
-insert (c:cs) Trie{children=chl} = Trie{end=False, children=toMap False (M.toList chl)}
+insert []     Trie{children=chl}        = Trie{end=True,  children=chl}
+insert (c:cs) Trie{end=e, children=chl} = Trie{end=e, children=toMap False (M.toList chl)}
         where
             toMap found []
                 | found     = M.empty
