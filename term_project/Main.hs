@@ -7,7 +7,7 @@ import Prelude hiding (Word)
 data Trie = Trie {end :: Bool, children :: M.Map Char Trie}
     deriving Show
 type Word = String
-data Action = Add [String] | Search String | Find String | Print | Exit
+data Action = Add String | Search String | Find String | Print | Exit
     deriving Show
 
 
@@ -57,7 +57,7 @@ prefix w = remain w
             Just t  -> remain cs t
 
 
-getInput :: IO (String, [String])
+getInput :: IO (String, String)
 getInput = do
             putStrLn "a) Add Word"
             putStrLn "s) Search Word"
@@ -71,14 +71,14 @@ getInput = do
                 else do
                     putStrLn "Enter word/prefix:"
                     info <- getLine
-                    return (action, words info)
+                    return (action, info)
 
 
-convertAction :: (String, [String]) -> Maybe Action
+convertAction :: (String, String) -> Maybe Action
 convertAction a = case a of
-    ("a", ss)  -> Just $ Add ss
-    ("s", [s]) -> Just $ Search s
-    ("f", [s]) -> Just $ Find s
+    ("a", s)   -> Just $ Add s
+    ("s", s)   -> Just $ Search s
+    ("f", s)   -> Just $ Find s
     ("p", _)   -> Just $ Print
     ("e", _)   -> Just $ Exit
     _          -> Nothing
