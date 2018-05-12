@@ -114,6 +114,10 @@ loop t = do
 
 
 main = do
-        input <- getInput
-        let action = convertAction input
-        putStrLn $ show action
+        args <- getArgs
+        if null args then
+            putStrLn "Please give a filename"
+        else do
+            let filename = args !! 0
+            ws <- readFile filename
+            loop $ insertList (lines ws)
