@@ -49,7 +49,12 @@ getWords Trie{end=e, children=chl} = allWords e [] (M.toList chl)
 
 
 prefix :: Word -> Trie -> Maybe [Word]
-prefix = undefined
+prefix w = remain w
+    where
+        remain ""     t                  = Just $ (map (w++) . getWords) t
+        remain (c:cs) Trie{children=chl} = case (M.lookup c chl) of
+            Nothing -> Nothing
+            Just t  -> remain cs t
 
 
 getInput :: IO (String, [String])
