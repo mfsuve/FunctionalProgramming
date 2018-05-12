@@ -16,7 +16,15 @@ empty = Trie {end=False, children=M.empty}
 
 
 insert :: Word -> Trie -> Trie
-insert = undefined
+insert []     Trie{children=chl} = Trie{end=True,  children=chl}
+insert (c:cs) Trie{children=chl} = Trie{end=False, children=toMap False (M.toList chl)}
+        where
+            toMap found []
+                | found     = M.empty
+                | otherwise = M.insert c (insert cs empty) M.empty
+            toMap found ((c', t):xs)
+                | c==c'     = M.insert c (insert cs t) (toMap True xs)
+                | otherwise = M.insert c' t (toMap found xs)
 
 
 insertList :: [Word] -> Trie
